@@ -22,7 +22,18 @@ export default function Home() {
   const [playerTracker, setPlayerTracker] = useState<boolean>(true);
 
   useEffect(() => {
-    isGameWon(boxes, setGameOn, setWinningBoxes);
+    const winningPatterns = [
+      ["1", "2", "3"],
+      ["4", "5", "6"],
+      ["7", "8", "9"],
+      ["1", "4", "7"],
+      ["2", "5", "8"],
+      ["3", "6", "9"],
+      ["1", "5", "9"],
+      ["3", "5", "7"],
+    ];
+
+    isGameWon(boxes, setGameOn, setWinningBoxes, winningPatterns);
   }, [boxes]);
 
   return (
@@ -53,23 +64,13 @@ export default function Home() {
 
 export type SetState<T> = Dispatch<SetStateAction<T>>;
 
-const WINNING_PATTERNS = [
-  ["1", "2", "3"],
-  ["4", "5", "6"],
-  ["7", "8", "9"],
-  ["1", "4", "7"],
-  ["2", "5", "8"],
-  ["3", "6", "9"],
-  ["1", "5", "9"],
-  ["3", "5", "7"],
-];
-
 function isGameWon(
   boxes: { [key: string]: BoxValue },
   setGameOn: SetState<boolean>,
   setWinningBoxes: SetState<string[] | null>,
+  winningPatterns: string[][],
 ) {
-  const markedWinningPattern = getMarkedWinningPattern(boxes, WINNING_PATTERNS);
+  const markedWinningPattern = getMarkedWinningPattern(boxes, winningPatterns);
 
   if (markedWinningPattern) {
     setWinningBoxes(markedWinningPattern);
