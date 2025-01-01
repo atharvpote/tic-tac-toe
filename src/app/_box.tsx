@@ -1,4 +1,4 @@
-import { BoxValue, SetState } from "./page";
+import { BoxValue, SetState } from "./_board";
 
 type BoxProps = {
   boxes: { [key: string]: BoxValue };
@@ -34,7 +34,9 @@ export function Box({
           }
       }}
     >
-      <span className="text-4xl">{value ?? ""}</span>
+      <span className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
+        {value ?? ""}
+      </span>
     </button>
   );
 }
