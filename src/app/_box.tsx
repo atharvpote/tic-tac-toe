@@ -1,14 +1,14 @@
-import type { Boxes, BoxIDs, BoxValue, SetState } from "./_board";
+import type { Boxes, BoxID, BoxValue, SetState } from "./_board";
 
 type BoxProps = {
   boxes: Boxes;
   gameOn: boolean;
-  id: string;
+  id: BoxID;
   playerTracker: boolean;
   setBoxes: SetState<Boxes>;
   setPlayerTracker: SetState<boolean>;
   value: BoxValue;
-  winningBoxes: string[] | null;
+  winningBoxes: BoxID[] | null;
 };
 
 export function Box({
@@ -27,7 +27,7 @@ export function Box({
       className={`grid aspect-square border-collapse place-items-center border-4 border-black px-4 text-center dark:border-white ${winningBoxes ? (winningBoxes.includes(id) ? "bg-teal-700" : "") : ""}`}
       onClick={() => {
         if (gameOn)
-          if (!boxes[id as BoxIDs]) {
+          if (!boxes[id as BoxID]) {
             setBoxes({ ...boxes, [id]: getCurrentPlayer(playerTracker) });
 
             setPlayerTracker(!playerTracker);

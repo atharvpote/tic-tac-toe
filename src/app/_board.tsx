@@ -3,9 +3,9 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Box } from "./_box";
 
-export type BoxIDs = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
+export type BoxID = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
 export type BoxValue = "X" | "O" | null;
-export type Boxes = { [key in BoxIDs]: BoxValue };
+export type Boxes = { [key in BoxID]: BoxValue };
 
 export function Board() {
   const [gameOn, setGameOn] = useState<boolean>(true);
@@ -20,11 +20,11 @@ export function Board() {
     "8": null,
     "9": null,
   });
-  const [winningBoxes, setWinningBoxes] = useState<string[] | null>(null);
+  const [winningBoxes, setWinningBoxes] = useState<BoxID[] | null>(null);
   const [playerTracker, setPlayerTracker] = useState<boolean>(true);
 
   useEffect(() => {
-    const winningPatterns = [
+    const winningPatterns: BoxID[][] = [
       ["1", "2", "3"],
       ["4", "5", "6"],
       ["7", "8", "9"],
@@ -44,7 +44,7 @@ export function Board() {
         <Box
           boxes={boxes}
           gameOn={gameOn}
-          id={key}
+          id={key as BoxID}
           key={key}
           playerTracker={playerTracker}
           setBoxes={setBoxes}
@@ -62,8 +62,8 @@ export type SetState<T> = Dispatch<SetStateAction<T>>;
 function isGameWon(
   boxes: Boxes,
   setGameOn: SetState<boolean>,
-  setWinningBoxes: SetState<string[] | null>,
-  winningPatterns: string[][],
+  setWinningBoxes: SetState<BoxID[] | null>,
+  winningPatterns: BoxID[][],
 ) {
   const markedWinningPattern = getMarkedWinningPattern(boxes, winningPatterns);
 
@@ -73,11 +73,11 @@ function isGameWon(
   }
 }
 
-function getMarkedWinningPattern(boxes: Boxes, winningPatterns: string[][]) {
+function getMarkedWinningPattern(boxes: Boxes, winningPatterns: BoxID[][]) {
   for (const pattern of winningPatterns)
     if (
-      pattern.every((box) => boxes[box as BoxIDs] === "X") ||
-      pattern.every((box) => boxes[box as BoxIDs] === "O")
+      pattern.every((box) => boxes[box] === "X") ||
+      pattern.every((box) => boxes[box] === "O")
     )
       return pattern;
 
