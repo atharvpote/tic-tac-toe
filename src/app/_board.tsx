@@ -3,11 +3,13 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Box } from "./_box";
 
+export type BoxIDs = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
 export type BoxValue = "X" | "O" | null;
+export type Boxes = { [key in BoxIDs]: BoxValue };
 
 export function Board() {
   const [gameOn, setGameOn] = useState<boolean>(true);
-  const [boxes, setBoxes] = useState<{ [key: string]: BoxValue }>({
+  const [boxes, setBoxes] = useState<Boxes>({
     "1": null,
     "2": null,
     "3": null,
@@ -58,7 +60,7 @@ export function Board() {
 export type SetState<T> = Dispatch<SetStateAction<T>>;
 
 function isGameWon(
-  boxes: { [key: string]: BoxValue },
+  boxes: Boxes,
   setGameOn: SetState<boolean>,
   setWinningBoxes: SetState<string[] | null>,
   winningPatterns: string[][],
@@ -71,14 +73,11 @@ function isGameWon(
   }
 }
 
-function getMarkedWinningPattern(
-  boxes: { [key: string]: BoxValue },
-  winningPatterns: string[][],
-) {
+function getMarkedWinningPattern(boxes: Boxes, winningPatterns: string[][]) {
   for (const pattern of winningPatterns)
     if (
-      pattern.every((box) => boxes[box] === "X") ||
-      pattern.every((box) => boxes[box] === "O")
+      pattern.every((box) => boxes[box as BoxIDs] === "X") ||
+      pattern.every((box) => boxes[box as BoxIDs] === "O")
     )
       return pattern;
 
