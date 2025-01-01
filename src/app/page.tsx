@@ -30,20 +30,22 @@ export default function Home() {
       <header className="py-12">
         <h1 className="text-center text-4xl font-bold">Tic Tac Toe</h1>
       </header>
-      <div className="mx-auto grid aspect-square max-w-xl grid-cols-3 border-4 border-black dark:border-white">
-        {Object.entries(boxes).map(([key, value]) => (
-          <Box
-            key={key}
-            boxes={boxes}
-            gameOn={gameOn}
-            id={key}
-            playerTracker={playerTracker}
-            setBoxes={setBoxes}
-            setPlayerTracker={setPlayerTracker}
-            value={value}
-            winningBoxes={winningBoxes}
-          />
-        ))}
+      <div className="px-4">
+        <div className="mx-auto grid aspect-square max-w-xl grid-cols-3 border-4 border-black dark:border-white">
+          {Object.entries(boxes).map(([key, value]) => (
+            <Box
+              key={key}
+              boxes={boxes}
+              gameOn={gameOn}
+              id={key}
+              playerTracker={playerTracker}
+              setBoxes={setBoxes}
+              setPlayerTracker={setPlayerTracker}
+              value={value}
+              winningBoxes={winningBoxes}
+            />
+          ))}
+        </div>
       </div>
     </main>
   );
