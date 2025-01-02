@@ -1,12 +1,19 @@
-import type { Boxes, BoxID, BoxValue, SetState } from "./_board";
+import {
+  switchPlayer,
+  type Boxes,
+  type BoxID,
+  type BoxValue,
+  type Player,
+  type SetState,
+} from "./_board";
 
 type BoxProps = {
   boxes: Boxes;
   gameOn: boolean;
   id: BoxID;
-  playerTracker: boolean;
+  playerTracker: Player;
   setBoxes: SetState<Boxes>;
-  setPlayerTracker: SetState<boolean>;
+  setPlayerTracker: SetState<Player>;
   value: BoxValue;
   winningBoxes: BoxID[] | null;
 };
@@ -28,9 +35,9 @@ export function Box({
       onClick={() => {
         if (gameOn)
           if (!boxes[id as BoxID]) {
-            setBoxes({ ...boxes, [id]: getCurrentPlayer(playerTracker) });
+            setBoxes({ ...boxes, [id]: playerTracker });
 
-            setPlayerTracker(!playerTracker);
+            setPlayerTracker(switchPlayer(playerTracker));
           }
       }}
     >
@@ -39,8 +46,4 @@ export function Box({
       </span>
     </button>
   );
-}
-
-function getCurrentPlayer(tracker: boolean) {
-  return tracker ? "X" : "O";
 }
